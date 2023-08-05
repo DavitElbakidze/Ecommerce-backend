@@ -1,21 +1,28 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+
+export enum Role {
+  ADMIN = 'admin',
+  USER = 'user',
+  MANAGER = 'manager',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id?: number;
 
   @Column()
-  firstname: string;
+  firstName: string;
 
   @Column()
-  lastname: string;
+  lastName: string;
 
   @Column({ type: 'date' })
   birthDate: Date;
 
-  @Column()
-  unId: string;
+  @Column({ nullable: true })
+  unId?: string;
 
   @Column({ nullable: true })
   image?: string;
@@ -26,21 +33,23 @@ export class User {
   @Column({ nullable: true })
   address?: string;
 
+  @Column({ type: 'enum', enum: Role, default: Role.USER })
+  roles: Role;
+
   @Column()
-  role: Role;
+  password: string;
+
+  @Column({ unique: true })
+  email: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createDate: Date;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: false })
   isVerified?: boolean;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: false })
   isDeleted?: boolean;
 }
 
-export enum Role {
-  ADMIN = 'admin',
-  USER = 'user',
-  MANAGER = 'manager',
-}
+
