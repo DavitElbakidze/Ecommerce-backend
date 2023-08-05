@@ -15,7 +15,7 @@ export class Product {
   @Column()
   quantity: number;
 
-  @ManyToOne(() => Category, { eager: true }) // Assuming you have defined the Category entity as well
+  @ManyToOne(() => Category, { eager: true }) 
   category: Category;
 
   @Column('simple-array', { nullable: true })
